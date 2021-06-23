@@ -4,6 +4,20 @@
 
 // MATRIX DECLARATION
 
+void matrix::diagonal(int n, double a){
+    mat = new double *[c];
+    for(int i = 0; i < c; i++){
+        mat[i] = new double[r];
+        for(int j = 0; j < r; j++){
+            if(j == i){
+                mat[i][j] = 1;
+            } else{
+                mat[i][j] = 0;
+            }
+        }
+    }
+}
+
 matrix::matrix(int row, int col, char type){
     if(type != 'r'){
         throw "Command not recognised";
@@ -19,17 +33,20 @@ matrix::matrix(int row, int col, char type){
     }
 }
 matrix::matrix(int n, char type){
-    if(type != 'r'){
-        throw "Command not recognised";
-    }
-    r = n;
-    c = n;
-    mat = new double *[n];
-    for(int i = 0; i < n; i++){
-        mat[i] = new double[n];
-        for(int j = 0; j < n; j++){
-            mat[i][j] = rand();
+    if(type == 'r'){
+        r = n;
+        c = n;
+        mat = new double *[n];
+        for(int i = 0; i < n; i++){
+            mat[i] = new double[n];
+            for(int j = 0; j < n; j++){
+                mat[i][j] = rand();
+            }
         }
+    }else if(type == 'd'){
+        diagonal(n, 1);
+    }else{
+        throw "Invalid matrix request";
     }
 }
 matrix::matrix(int n){
@@ -42,13 +59,71 @@ matrix::matrix(int n){
         }
     }
 }
+matrix::matrix(int n, double a){
+    r = n;
+    mat = new double *[n];
+    for(int i = 0; i < n; i++){
+        mat[i] = new double[n];
+        for(int j = 0; j < n; j++){
+            mat[i][j] = a;
+        }
+    }
+}
 
 
 // MATRIX OPERATIONS
 
 vector matrix::product(vector v){
     
-    vector res = vector(v.len, 'r');
+    /*
+        x = vector, A = matrix
+        res = A*x
+    */
+   if(c != v.len){
+       throw "Size mismatch";
+   }
+    vector res = vector(r, 'r');
+    for(int i = 0; i < r;i++){
+        res.vec[i] = 0;
+        for(int j = 0; j < c; j++){
+            res.vec[i] += mat[i][j]*v.vec[j];
+        }
+    }
+    return res;
+}
+vector matrix::product(matrix t){
+    vector v = vector(t);
+    /*
+        x = vector, A = matrix
+        res = A*x
+    */
+   if(c != v.len){
+       throw "Size mismatch";
+   }
+    vector res = vector(r, 'r');
+    for(int i = 0; i < r;i++){
+        res.vec[i] = 0;
+        for(int j = 0; j < c; j++){
+            res.vec[i] += mat[i][j]*v.vec[j];
+        }
+    }
+    return res;
+}
+
+void matrix::print(){
+    if(mat == NULL){
+        throw "Matrix not initialized";
+    }
+    for(int i = 0; i < c; i++){
+        for(int j = 0; j < r; j++){
+            std::cout << mat[i][j];
+        }
+    }
+}
+
+// jacobi
+
+vector matrix::jacobi(vector b){
 
 }
 

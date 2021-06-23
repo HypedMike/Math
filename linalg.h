@@ -6,7 +6,11 @@ class matrix{
     matrix(int row, int col, char type);
     matrix(int n, char type);
     matrix(int n);
+    matrix(int n, double a);
+    matrix diagonal(int n, double a);
     vector product(vector v);
+    vector product(matrix t);
+    vector jacobi(vector b);
 };
 class vector{
     vector zero_vector(int n);
