@@ -34,16 +34,30 @@ bool Alghoritm::InsetionSort(char mode) {
 			while (j > 0) {
 				if (Alghoritm::vector.Pos(j - 1) > Alghoritm::vector.Pos(j)) {
 					double temp = Alghoritm::vector.Pos(j);
-					//Alghoritm::vector.Pos(j) = Alghoritm::vector.Pos(j - 1);
-
+					Alghoritm::vector.index(j, Alghoritm::vector[j - 1]);
+					Alghoritm::vector.index(j - 1, temp);
 				}
+				j--;
 			}
 		}
 		break;
 	case 'd': // discendente
-
+		for (int i = 1; i < Alghoritm::len; i++) {
+			double key = Alghoritm::vector.Pos(i);
+			int j = i;
+			while (j > 0) {
+				if (Alghoritm::vector.Pos(j - 1) < Alghoritm::vector.Pos(j)) {
+					double temp = Alghoritm::vector.Pos(j);
+					Alghoritm::vector.index(j, Alghoritm::vector[j - 1]);
+					Alghoritm::vector.index(j - 1, temp);
+					j--;
+				}
+			}
+		}
+		break;
 	}
-
-	
-
+	if (Alghoritm::vector == comp) {
+		return true;
+	}
+	return false;
 }

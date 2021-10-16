@@ -59,6 +59,14 @@ void Vector::print() {
 	}
 }
 
+bool Vector::index(int position, double value) {
+	if (position < 0 || position >= len) {
+		return false;
+	}
+	vec[position] = value;
+	return false;
+}
+
 double Vector::Pos(int position) {
 	if (position < len) {
 		return vec[position];
@@ -73,4 +81,76 @@ double Vector::Pos(int position) {
 
 int Vector::getLen() {
 	return Vector::len;
+}
+
+double Vector::operator[](int index) {
+	return Vector::Pos(index);
+}    // I'll optimize this one... maybe
+
+bool Vector::operator==(Vector vector) {
+	if (Vector::len != vector.getLen()) {
+		return false;
+	}
+	for (int i = 0; i < Vector::len; i++) {
+		if (vector[i] != Vector::vec[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
+Vector Vector::operator+(Vector vector) {
+	if (len != vector.getLen()) {
+		throw std::invalid_argument("Not same length vector");
+		return *this;
+	}
+	Vector res = Vector(Vector::len);
+	for (int i = 0; i < Vector::len; i++) {
+		res = vec[i] + vector[i];
+	}
+	return res;
+
+}
+
+Vector Vector::operator-(Vector vector) {
+	if (len != vector.getLen()) {
+		throw std::invalid_argument("Not same length vector");
+		return *this;
+	}
+	Vector res = Vector(Vector::len);
+	for (int i = 0; i < Vector::len; i++) {
+		res = vec[i] - vector[i];
+	}
+	return res;
+
+}
+
+Vector Vector::operator/(Vector vector) {
+	if (len != vector.getLen()) {
+		throw std::invalid_argument("Not same length vector");
+		return *this;
+	}
+	Vector res = Vector(Vector::len);
+	for (int i = 0; i < Vector::len; i++) {
+		if (vector[i] == 0) {
+			throw std::invalid_argument("Divided by zero");
+			return *this;
+		}
+		res = vec[i] / vector[i];
+	}
+	return res;
+
+}
+
+Vector Vector::operator*(Vector vector) {
+	if (len != vector.getLen()) {
+		throw std::invalid_argument("Not same length vector");
+		return *this;
+	}
+	Vector res = Vector(Vector::len);
+	for (int i = 0; i < Vector::len; i++) {
+		res = vec[i] * vector[i];
+	}
+	return res;
+
 }

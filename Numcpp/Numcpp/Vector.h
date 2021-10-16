@@ -11,13 +11,24 @@ public:
 	double popFront();
 	double popBack();
 	void print();
+	bool index(int position, double value);
 
 	// get parameters
 
-	operator new() {
-
-	}
 	double Pos(int position);
 	int getLen();
+
+	// operators overload
+
+	double operator[](int index);
+	bool operator==(Vector vector);
+	Vector operator+(Vector vector);
+	Vector operator-(Vector vector);
+	Vector operator/(Vector vector);
+	Vector operator*(Vector vector);
+
+
+
+
 };
 
